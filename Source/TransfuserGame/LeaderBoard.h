@@ -13,5 +13,7 @@ UCLASS()
 class TRANSFUSERGAME_API ULeaderBoard : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
+		UFUNCTION(BlueprintCallable, Category = "Hello")
+		static void ReadScore(int index, FString Player,int &Num, FString &Name, int &Score);
 	
 };
