@@ -86,44 +86,45 @@ void SetLeaderboards(int Index, FString Player, int &Num, FString &Name, int &Sc
 	fstream stream;
 
 
-	stream.open("C:\\Users\\w1641650\\Documents\\GitHub\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+	stream.open("C:\\Users\\w1641650\\Documents\\GitHub\\TransfuserGame\\Source\\TransfuserGame\\Score.txt" ,std::fstream::app);
 
 	if (!stream) {
 		NotAvailable = true;
 	}
 	int i = 0; //line number
-	while (getline(stream, line) && !NotAvailable)
+	while (getline(stream, line ) && !NotAvailable)
 	{
 		SplitInWords(line); //Divide each words of the the line and it puts its value in the vector read
 
 
-		if (i == Index)
-		{
+		
 
 
-			if ((content[3]._Equal( /*TCHAR_TO_UTF8(*Player)*/ "Sohaib"))) // at the begin of each line 
-			{
+			//if ((content[3]._Equal( /*TCHAR_TO_UTF8(*Player)*/ "Sohaib"))) // at the begin of each line 
+			
 
 
 				size_t len = content[5].length();
-				while (getline(stream, line))
-				{
+				
 					while (true)
 					{
-						size_t pos = line.find("1500");
+						size_t pos = line.find("1000");
 						if (pos != string::npos)
-							line.replace(pos, len, content[5]);
+						{
+							line.replace(pos, len, "1500");
+							stream <<line ;
+						}
 						else
 							break;
 					}
 
-				}
+				
 
 
-			}
+			
 
 
-			i++;
+			
 
 
 		}
@@ -131,7 +132,7 @@ void SetLeaderboards(int Index, FString Player, int &Num, FString &Name, int &Sc
 		stream.close(); //close text file
 
 	}
-}
+
 
 
 
