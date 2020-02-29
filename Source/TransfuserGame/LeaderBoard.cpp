@@ -32,23 +32,6 @@ void SplitInWords(string in) //Splits string into each word and places each word
 }
 
 
-void CountItems() //Opens the text file and counts the number of Items
-{
-	string line = "";
-
-	fstream stream;
-	stream.open("C:\\Users\\w1641650\\Documents\\GitHub\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
-
-	while (getline(stream, line))
-	{
-		SplitInWords(line);
-
-		if ((content[0]) == "-") // increment the counter items for each number that it finds in the text file
-			Pos++;
-
-	}
-	stream.close();
-}
 
 
 
@@ -63,8 +46,8 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 	if (!stream) {
 		NotAvailable = true;
 	}
-	int i = 0;
-	while (getline(stream, line) && !NotAvailable && !NotAvailablea && !found)
+	int i = 0; //line number
+	while (getline(stream, line) && !NotAvailable)
 	{
 		SplitInWords(line); //Divide each words of the the line and it puts its value in the vector read
 
@@ -72,8 +55,7 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 		if (i == Index) 
 		{
 
-			if (content.size() > 1) //if the line contains more than one word it means that it's the description of the item
-			{
+			
 				if ((content[0] == "-")) // at the begin of each line 
 				{
 					
@@ -82,18 +64,14 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 					Score = (stoi(content[5]));
 					Name = content[3].c_str();
 				}
-				if (Player.Equals(content[3].c_str()))
-				{
-					//found = true;
-				}
+				
 
-			}
-			else {
-				NotAvailablea = true;
-			}
-			
 		}
+		
+			
 		i++;
+		
+		
 	}
 	
 	stream.close(); //close text file
@@ -101,14 +79,71 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 }
 
 
+void SetLeaderboards(int Index, FString Player, int &Num, FString &Name, int &Score)
+{
+	string line = "";
+
+	fstream stream;
+
+
+	stream.open("C:\\Users\\w1641650\\Documents\\GitHub\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+
+	if (!stream) {
+		NotAvailable = true;
+	}
+	int i = 0; //line number
+	while (getline(stream, line) && !NotAvailable)
+	{
+		SplitInWords(line); //Divide each words of the the line and it puts its value in the vector read
+
+
+		if (i == Index)
+		{
+
+
+			if ((content[3]._Equal( /*TCHAR_TO_UTF8(*Player)*/ "Sohaib"))) // at the begin of each line 
+			{
+
+
+				size_t len = content[5].length();
+				while (getline(stream, line))
+				{
+					while (true)
+					{
+						size_t pos = line.find("1500");
+						if (pos != string::npos)
+							line.replace(pos, len, content[5]);
+						else
+							break;
+					}
+
+				}
+
+
+			}
+
+
+			i++;
+
+
+		}
+
+		stream.close(); //close text file
+
+	}
+}
+
+
+
 void ULeaderBoard::ReadScore(int Index, FString Player, int &Num, FString &Name, int &Score)
 {
-	/**/
-	CountItems();
-	//int num[10];
-	//FString user[10];
-//	int score[10];
-	ReadFile(Index, Player,Num,Name,Score);
+	
+	Num = 0;
+
+	Score = 0;
+	Name = "";
+	ReadFile(Index, Player, Num, Name, Score);
+
 	if (NotAvailable) 
 	{
 		Num = -1;
@@ -116,6 +151,29 @@ void ULeaderBoard::ReadScore(int Index, FString Player, int &Num, FString &Name,
 		Score = -2;
 	}
 	else 
+	{
+		//Num = -4;
+
+	}
+
+	return;
+
+}
+void ULeaderBoard::SetLeaderboard(int Index, FString Player, int &Num, FString &Name, int &Score)
+{
+
+	Num = 0;
+
+	Score = 0;
+	Name = "";
+	SetLeaderboards(Index, Player, Num, Name, Score);
+	if (NotAvailable)
+	{
+		Num = -1;
+		Name = "Not Available";
+		Score = -2;
+	}
+	else
 	{
 		//Num = -4;
 
