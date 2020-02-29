@@ -41,7 +41,7 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 	string line = "";
 	fstream stream;
 
-	stream.open("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+	stream.open("TransfuserGame\\Source\\TransfuserGame\\Score.txt");
 
 	if (!stream) {
 		NotAvailable = true;
@@ -87,7 +87,7 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 	string output;
 
 
-	stream.open("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+	stream.open("TransfuserGame\\Source\\TransfuserGame\\Score.txt");
 
 	if (!stream) {
 		NotAvailable = true;
