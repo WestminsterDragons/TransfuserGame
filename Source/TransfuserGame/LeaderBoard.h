@@ -20,6 +20,7 @@ class TRANSFUSERGAME_API ULeaderBoard : public UBlueprintFunctionLibrary
 		static void SetLeaderboard(int index, int PlayerScore, FString Player, int &Num, FString &Name, int &Score);
 		UFUNCTION(BlueprintCallable, Category = "Lead")
 		static void ReadScore(int index, FString Player,int &Num, FString &Name, int &Score); 
-		
+		UFUNCTION(BlueprintCallable, Category = "Leads")
+			static void SortLead(int PlayerScore, FString Player);
 		
 };
