@@ -9,14 +9,20 @@
 #include <sstream> 
 #include <vector> 
 #include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
 #include "PlatformFilemanager.h"
 using namespace std;
 vector<string> content;
-int Pos = 0; // number of lines
+
 int counter = 0; // number of lines
 bool NotAvailable = false;
-bool NotAvailablea = false;
-bool found = false;
+
+FString tmp= FPaths::GameSourceDir();
+string Path = (TCHAR_TO_UTF8(*tmp)) ;
+string PathScore = Path + "/TransfuserGame/Score.txt";
+string PathScores = Path + "/TransfuserGame/Scores.txt";
+string PathFolder = Path + "/TransfuserGame";
+
 
 void SplitInWords(string in) //Splits string into each word and places each word in a new vector position
 {
@@ -30,6 +36,7 @@ void SplitInWords(string in) //Splits string into each word and places each word
 
 	while (ss >> buf)
 		content.push_back(buf);
+	
 }
 
 
@@ -40,8 +47,8 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 {
 	string line = "";
 	fstream stream;
-
-	stream.open("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+	
+	stream.open(PathScore);
 
 	if (!stream) {
 		NotAvailable = true;
@@ -82,12 +89,12 @@ void ReadFile(int Index, FString Player,int &Num, FString &Name, int &Score)
 void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FString& Name, int& Score)
 {
 	string line = "";
-
 	fstream stream;
 	string output;
+	bool found = false;
+	int lastN;
 
-
-	stream.open("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
+	stream.open(PathScore );
 
 	if (!stream) {
 		NotAvailable = true;
@@ -114,8 +121,8 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 					size_t pos = line.find(to_string(value));
 					if (pos != string::npos)
 					{
-						line.replace(pos, len, to_string(PlayerScore-1 ));
-						
+						line.replace(pos, len, to_string(PlayerScore ));
+						found = true;
 					}
 					
 						
@@ -124,13 +131,20 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 			
 
 		}
+		
+		stringstream tmp(content[1]);
+		tmp >> lastN;
 		output.append(line + " \n");
 
 		
 	}
+	if (!found)
+	{
+		output.append("- " + to_string(lastN+1) + " | " + TCHAR_TO_UTF8(*Player) + " | " + to_string(PlayerScore) + "\n");
+	}
 
 	stream.close(); //close text file
-	FString SaveDirectory = FString("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame");
+	FString SaveDirectory = (PathFolder.c_str());
 	FString FileName = FString("Scores.txt");
 	FString TextToSave = (output.c_str());
 	bool AllowOverwriting = true;
@@ -151,8 +165,8 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 			FFileHelper::SaveStringToFile(TextToSave, *AbsoluteFilePath);
 		}
 	}
-	remove("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt");
-	rename(("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Scores.txt"), ("D:\\Alby\\Documents\\TransfuserGame\\Source\\TransfuserGame\\Score.txt"));
+	remove((PathScore.c_str()));
+	rename((PathScores.c_str()), (PathScore.c_str()));
 }
 
 
