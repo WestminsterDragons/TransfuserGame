@@ -2,6 +2,9 @@
 
 #pragma once
 
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "PlatformFilemanager.h"
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "LeaderBoard.generated.h"
@@ -18,5 +21,5 @@ class TRANSFUSERGAME_API ULeaderBoard : public UBlueprintFunctionLibrary
 		UFUNCTION(BlueprintCallable, Category = "Lead")
 		static void ReadScore(int index, FString Player,int &Num, FString &Name, int &Score); 
 		
-	
+		
 };
