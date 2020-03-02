@@ -132,7 +132,10 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 			
 
 		}
-		
+		else 
+		{
+			
+		}
 		
 		stringstream tmps(content[1]);
 		tmps >> lastN;
@@ -184,7 +187,6 @@ void sorting() {
 			int value2 = 0;
 			tmps >> value1;
 			tm >> value2;
-
 			if (value1 < value2 && LeadContainer[i][0] !="")
 			{
 				temp = LeadContainer[i][1];
@@ -203,16 +205,9 @@ void SortLeads(int PlayerScore, FString Player)
 	string line = "";
 	fstream stream;
 	string output;
-	size_t len = content[5].length();
-	stringstream tmp(content[5]);
-	int value = 0;
-	tmp >> value;
+	
 	
 
-	for (int ix = 0; ix < (sizeof(LeadContainer) / sizeof(*LeadContainer)); ix++) {
-		LeadContainer[ix][0] = "";
-		LeadContainer[ix][1] = "";
-	}
 	stream.open(PathScore);
 
 	if (!stream) {
@@ -220,38 +215,19 @@ void SortLeads(int PlayerScore, FString Player)
 	}
 	
 	int index = 0;
-	bool found = false;
 	while (getline(stream, line) && !NotAvailable)
 	{
-		SplitInWords(line);
-		if ((content[3].compare(TCHAR_TO_UTF8(*Player)) == 0)) 
-
-		{
-			if (PlayerScore > value)
-			{
-				size_t pos = line.find(to_string(value));
-				if (pos != string::npos)
-				{
-					line.replace(pos, len, to_string(PlayerScore));
-					SplitInWords(line); //Divide each words of the the line and it puts its value in the vector read
-					found = true;
-				}
-
-
-			}
-		}
+		SplitInWords(line); //Divide each words of the the line and it puts its value in the vector read
 		
+
 		if (index <= 9) {
 			LeadContainer[index][1] = content[5];
 			LeadContainer[index][0] = content[3];
 			index++;
 		}
 		else {
-			if (!found)
-			{
-				LeadContainer[10][0] = TCHAR_TO_UTF8(*Player);
-				LeadContainer[10][1] = to_string(PlayerScore);
-			}
+			LeadContainer[10][0] = TCHAR_TO_UTF8(*Player);
+			LeadContainer[10][1] = to_string(PlayerScore);
 		}
 
 	}
