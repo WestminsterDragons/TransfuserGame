@@ -17,11 +17,17 @@ vector<string> content;
 int counter = 0; // number of lines
 bool NotAvailable = false;
 
-FString tmp= FPaths::GameSourceDir();
-string Path = (TCHAR_TO_UTF8(*tmp)) ;
-string PathScore = Path + "/TransfuserGame/Score.txt";
+FString tmp= FPaths::ConvertRelativePathToFull(FPaths::GameDir());
+//FString tmp ="D:\\Alby\\Documents\\TransfuserExe\\WindowsNoEditor";
+
+string Path =(TCHAR_TO_UTF8(*tmp)) ;
+/*string PathScore = Path + "/TransfuserGame/Score.txt";
 string PathScores = Path + "/TransfuserGame/Scores.txt";
-string PathFolder = Path + "/TransfuserGame";
+string PathFolder = Path + "/TransfuserGame";*/
+string PathScore = Path + "\\Score.txt";
+string PathScores = Path + "\\Scores.txt";
+string PathFolder = Path ;
+
 string LeadContainer[11][2];
 
 void SplitInWords(string in) //Splits string into each word and places each word in a new vector position
@@ -156,13 +162,13 @@ void SetLeaderboards(int Index, int PlayerScore, FString Player, int& Num, FStri
 	// CreateDirectoryTree returns true if the destination
 	// directory existed prior to call or has been created
 	// during the call.
-	if (PlatformFile.CreateDirectoryTree(*SaveDirectory))
+	//if (PlatformFile.CreateDirectoryTree(*SaveDirectory))
 	{
 		// Get absolute file path
 		FString AbsoluteFilePath = SaveDirectory + "/" + FileName;
 
 		// Allow overwriting or file doesn't already exist
-		if (AllowOverwriting || !PlatformFile.FileExists(*AbsoluteFilePath))
+		if (AllowOverwriting  /*!PlatformFile.FileExists(*AbsoluteFilePath)*/)
 		{
 			FFileHelper::SaveStringToFile(TextToSave, *AbsoluteFilePath);
 		}
