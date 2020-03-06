@@ -18,10 +18,14 @@ int counter = 0; // number of lines
 bool NotAvailable = false;
 
 FString tmp= FPaths::GameSourceDir();
-string Path = (TCHAR_TO_UTF8(*tmp)) ;
-string PathScore = Path + "/TransfuserGame/Score.txt";
+string Path = "";//(TCHAR_TO_UTF8(*tmp)) ;
+/*string PathScore = Path + "/TransfuserGame/Score.txt";
 string PathScores = Path + "/TransfuserGame/Scores.txt";
-string PathFolder = Path + "/TransfuserGame";
+string PathFolder = Path + "/TransfuserGame";*/
+string PathScore = Path + "Score.txt";
+string PathScores = Path + "Scores.txt";
+string PathFolder = Path ;
+
 string LeadContainer[11][2];
 
 void SplitInWords(string in) //Splits string into each word and places each word in a new vector position
